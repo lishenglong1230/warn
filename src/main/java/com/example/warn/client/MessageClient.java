@@ -1,5 +1,6 @@
 package com.example.warn.client;
 
+import com.example.warn.handler.ClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -22,7 +23,7 @@ public class MessageClient {
                             ChannelPipeline pipeline = socketChannel.pipeline();
                             pipeline.addLast("Decoder",new StringDecoder());
                             pipeline.addLast("Encoder",new StringEncoder());
-                            pipeline.addLast(null);
+                            pipeline.addLast(new ClientHandler());
 
                         }
                     });
@@ -32,5 +33,10 @@ public class MessageClient {
         } finally {
             group.shutdownGracefully();
         }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        MessageClient messageClient=new MessageClient();
+        messageClient.connect(8848,"localhost");
     }
 }
