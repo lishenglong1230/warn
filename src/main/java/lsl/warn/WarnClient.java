@@ -5,8 +5,8 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 
 import java.util.Scanner;
 
@@ -27,7 +27,6 @@ public class WarnClient {
 
         try {
 
-
             Bootstrap bootstrap = new Bootstrap()
                     .group(group)
                     .channel(NioSocketChannel.class)
@@ -39,8 +38,10 @@ public class WarnClient {
                             //得到pipeline
                             ChannelPipeline pipeline = ch.pipeline();
                             //加入相关handler
-                            pipeline.addLast("decoder", new StringDecoder());
-                            pipeline.addLast("encoder", new StringEncoder());
+                            //向pipeline加入编码器
+                            pipeline.addLast("encoder",new ProtobufEncoder());
+                            //向pipeline加入解码器
+                            pipeline.addLast("decoder", new ProtobufDecoder(MessagePOJO.Msg.getDefaultInstance()));
                             //加入自定义的handler
                             pipeline.addLast(new WarnClientHandler());
                         }
@@ -52,16 +53,14 @@ public class WarnClient {
             System.out.println("-------" + channel.localAddress() + "--------");
             //客户端需要输入信息，创建一个扫描器
             Scanner scanner = new Scanner(System.in);
-            Message message = new Message();
             while (true) {
                 System.out.print("请输入当前地点： ");
                 String address = scanner.nextLine();
-                message.setAddress(address);
                 System.out.print("请输入当前车祸类型： ");
                 String type = scanner.nextLine();
-                message.setType(type);
+                MessagePOJO.Msg message = MessagePOJO.Msg.newBuilder().setAddress(address).setType(type).build();
                 //通过channel 发送到服务器端
-                channel.writeAndFlush(message);
+                channel.write(message);
             }
 
         } finally {

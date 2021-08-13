@@ -9,7 +9,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 import java.text.SimpleDateFormat;
 
-public class WarnServerHandler extends SimpleChannelInboundHandler<netty.lsl.Message> {
+public class WarnServerHandler extends SimpleChannelInboundHandler<MessagePOJO.Msg> {
 
     //定义一个channle 组，管理所有的channel
     private static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
@@ -35,7 +35,8 @@ public class WarnServerHandler extends SimpleChannelInboundHandler<netty.lsl.Mes
 
     //读取警报数据
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, netty.lsl.Message msg) throws Exception {
+    public void channelRead0(ChannelHandlerContext ctx, MessagePOJO.Msg msg) throws Exception {
+        System.out.println("开始读");
 
         //获取到当前channel
         Channel channel = ctx.channel();
@@ -45,7 +46,7 @@ public class WarnServerHandler extends SimpleChannelInboundHandler<netty.lsl.Mes
                 System.out.println(msg.getAddress()+"发来报警");
                 ch.writeAndFlush(msg);
             } else {//回显自己发送的消息给自己，提示自己已报警，加时间
-                msg.setMsg("已完成报警");
+                System.out.println("没接到消息");
                 ch.writeAndFlush(msg);
             }
         });

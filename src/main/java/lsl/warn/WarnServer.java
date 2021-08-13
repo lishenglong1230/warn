@@ -5,8 +5,8 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 
 public class WarnServer {
 
@@ -38,10 +38,11 @@ public class WarnServer {
 
                             //获取到pipeline
                             ChannelPipeline pipeline = ch.pipeline();
-                            //向pipeline加入解码器
-                            pipeline.addLast("decoder", new StringDecoder());
                             //向pipeline加入编码器
-                            pipeline.addLast("encoder", new StringEncoder());
+                            pipeline.addLast("encoder",new ProtobufEncoder());
+                            //向pipeline加入解码器
+                            pipeline.addLast("decoder", new ProtobufDecoder(MessagePOJO.Msg.getDefaultInstance()));
+
                             //加入自己的业务处理handler
                             pipeline.addLast(new WarnServerHandler());
 
