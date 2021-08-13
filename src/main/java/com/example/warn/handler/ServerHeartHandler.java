@@ -24,6 +24,5 @@ public class ServerHeartHandler extends SimpleChannelInboundHandler<Message> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Message msg) throws Exception {
         //Message message = new Gson().fromJson(String.valueOf(msg),Message.class);
-
     }
 }

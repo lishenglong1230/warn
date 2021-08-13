@@ -2,13 +2,18 @@ package com.example.warn.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class MessageServer {
@@ -23,7 +28,13 @@ public class MessageServer {
             serverBootstrap.group(bossGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
                     //TODO
-                    .childHandler(null);
+                    .handler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        protected void initChannel(SocketChannel ch) throws Exception {
+                            ChannelPipeline pipeline = ch.pipeline();
+                            pipeline.addLast("heartbeat",new IdleStateHandler(10, 0, 0,TimeUnit.SECONDS));
+                        }
+                    });
 
             //启动服务器
             ChannelFuture channelFuture = serverBootstrap.bind(8848).sync();

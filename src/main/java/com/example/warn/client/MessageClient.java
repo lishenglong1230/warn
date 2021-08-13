@@ -1,13 +1,12 @@
 package com.example.warn.client;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 
 public class MessageClient {
     public void connect(int port, String host) throws InterruptedException {
@@ -20,7 +19,11 @@ public class MessageClient {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             //TODO
-                            socketChannel.pipeline().addLast(null);
+                            ChannelPipeline pipeline = socketChannel.pipeline();
+                            pipeline.addLast("Decoder",new StringDecoder());
+                            pipeline.addLast("Encoder",new StringEncoder());
+                            pipeline.addLast(null);
+
                         }
                     });
             ChannelFuture f = b.connect(host, port).sync();
