@@ -122,13 +122,13 @@ public final class MessagePOJO {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return netty.lsl.MessagePOJO.internal_static_Msg_descriptor;
+      return MessagePOJO.internal_static_Msg_descriptor;
     }
 
     @Override
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return netty.lsl.MessagePOJO.internal_static_Msg_fieldAccessorTable
+      return MessagePOJO.internal_static_Msg_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               Msg.class, Builder.class);
     }
@@ -387,13 +387,13 @@ public final class MessagePOJO {
         MsgOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return netty.lsl.MessagePOJO.internal_static_Msg_descriptor;
+        return MessagePOJO.internal_static_Msg_descriptor;
       }
 
       @Override
       protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return netty.lsl.MessagePOJO.internal_static_Msg_fieldAccessorTable
+        return MessagePOJO.internal_static_Msg_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 Msg.class, Builder.class);
       }
@@ -426,7 +426,7 @@ public final class MessagePOJO {
       @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return netty.lsl.MessagePOJO.internal_static_Msg_descriptor;
+        return MessagePOJO.internal_static_Msg_descriptor;
       }
 
       @Override

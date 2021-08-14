@@ -3,6 +3,7 @@ package lsl.warn;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class ClientHandler extends ChannelInboundHandlerAdapter {
@@ -20,5 +21,17 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
              ctx.writeAndFlush(message);
 
          }).start();
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (msg instanceof MessagePOJO.Msg){
+            MessagePOJO.Msg message = (MessagePOJO.Msg) msg;
+            System.out.println(message.getAddress() + "发来车祸报警,车祸类型为" + message.getType() + "，时间为：" + sdf.format(new java.util.Date()));
+
+        }
+
+
     }
 }
