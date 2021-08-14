@@ -24,8 +24,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
              String type=sc.nextLine();
              SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
              String date = sdf.format(new Date());
-             Message message=new Message(name,arNumber,railway,type,date);
-             ctx.write(message);
+             //Message message=new Message(name,arNumber,railway,type,date);
+             //ctx.write(message);
 
          }).start();
     }
