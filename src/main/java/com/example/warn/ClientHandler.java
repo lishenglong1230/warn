@@ -1,4 +1,4 @@
-package lsl.warn;
+package com.example.warn;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

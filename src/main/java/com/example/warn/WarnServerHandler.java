@@ -1,15 +1,13 @@
-package lsl.warn;
+package com.example.warn;
 
-import com.google.gson.Gson;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelId;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.GlobalEventExecutor;
-import lsl.warn.config.Config;
+import com.example.warn.config.Config;
 
 import java.text.SimpleDateFormat;
 
@@ -18,13 +16,12 @@ public class WarnServerHandler extends SimpleChannelInboundHandler<MessagePOJO.M
     //定义一个channle 组，管理所有的channel
     private static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+    private static Config config=new Config();
 
     //handlerAdded 表示连接建立，一旦连接，第一个被执行
     //将当前channel 加入到  channelGroup
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-        Config config=new Config();
         int num=config.getI();
         num=num+2;
         config.setI(num);
@@ -66,7 +63,7 @@ public class WarnServerHandler extends SimpleChannelInboundHandler<MessagePOJO.M
                 ch.writeAndFlush(msg);
             }
         });*/
-        ChannelId channelId= Config.map.get(1);
+        ChannelId channelId= Config.map.get(2);
         System.out.println(channelId);
         if(channelId==null){
             sendMessageForAll("对方已下线");

@@ -1,6 +1,5 @@
-package lsl.warn.config;
+package com.example.warn.config;
 
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
 
 import java.util.concurrent.ConcurrentHashMap;

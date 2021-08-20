@@ -1,4 +1,4 @@
-package lsl.warn;
+package com.example.warn;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;

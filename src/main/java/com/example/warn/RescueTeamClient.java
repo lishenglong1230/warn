@@ -1,4 +1,4 @@
-package lsl.warn;
+package com.example.warn;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -8,8 +8,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 
-public class MessageClient {
-    public void connect(int port, String host) throws InterruptedException {
+public class RescueTeamClient {
+    public void run(int port, String host) throws InterruptedException {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap();
@@ -18,12 +18,12 @@ public class MessageClient {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            //TODO
+
                             ChannelPipeline pipeline = socketChannel.pipeline();
-                            pipeline.addLast("encoder",new ProtobufEncoder());
+                            pipeline.addLast("encoder", new ProtobufEncoder());
                             //向pipeline加入解码器
                             pipeline.addLast("decoder", new ProtobufDecoder(MessagePOJO.Msg.getDefaultInstance()));
-                            pipeline.addLast(new ClientHandler());
+                            pipeline.addLast(new RescueTeamClientHandler());
 
                         }
                     });
@@ -36,7 +36,8 @@ public class MessageClient {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        MessageClient messageClient=new MessageClient();
-        messageClient.connect(17000,"localhost");
+        RescueTeamClient rescueTeamClient=new RescueTeamClient();
+        rescueTeamClient.run(17000,"localhost");
     }
+
 }
