@@ -2,7 +2,6 @@ package com.example.warn.mapper;
 
 import com.example.warn.model.Thing;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 @Mapper
 public interface ThingMapper {

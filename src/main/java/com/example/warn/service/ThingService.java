@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
  * @Author: Lishenglong
  * @Date: 2021/8/20 11:17
  */
-
 public interface ThingService {
     /**
      * 根据事件id查询详情

@@ -3,16 +3,19 @@ package com.example.warn;
 import com.example.warn.config.Config;
 import com.example.warn.model.Thing;
 import com.example.warn.service.ThingService;
+import com.example.warn.service.impl.ThingServiceImpl;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 
 public class RescueTeamClientHandler extends SimpleChannelInboundHandler<MessagePOJO.Msg> {
 
     @Autowired
-    private ThingService thingService;
+    ThingServiceImpl thingService;
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
