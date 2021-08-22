@@ -1,17 +1,22 @@
 package com.example.warn;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelId;
-import io.netty.channel.SimpleChannelInboundHandler;
+import com.example.warn.config.Config;
+import com.example.warn.model.Thing;
+import com.example.warn.service.impl.ThingServiceImpl;
+import io.netty.channel.*;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
-import com.example.warn.config.Config;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 
+@Component
+@ChannelHandler.Sharable
 public class WarnServerHandler extends SimpleChannelInboundHandler<MessagePOJO.Msg> {
+    @Autowired
+    private ThingServiceImpl thingService;
 
     //定义一个channle 组，管理所有的channel
     private static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
@@ -65,11 +70,20 @@ public class WarnServerHandler extends SimpleChannelInboundHandler<MessagePOJO.M
         });*/
         ChannelId channelId= Config.map.get(2);
         System.out.println(channelId);
+
+
         if(channelId==null){
             sendMessageForAll("对方已下线");
         }else {
            channelGroup.find(channelId).writeAndFlush(msg);
         }
+
+        Thing thing=new Thing();
+        String str = sdf.format(new java.util.Date());
+        thing.setAddress(msg.getAddress());
+        thing.setType(msg.getType());
+        thing.setTime(str);
+        thingService.insertSelective(thing);
     }
 
     @Override

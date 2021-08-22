@@ -7,9 +7,9 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Component;
 
-@Component
 public class RescueTeamClient {
     public void run(int port, String host) throws InterruptedException {
         EventLoopGroup group = new NioEventLoopGroup();

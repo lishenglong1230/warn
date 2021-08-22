@@ -18,4 +18,6 @@ public interface ThingService {
     int insertSelective(Thing thing);
 
 
+
+
 }

@@ -19,18 +19,18 @@ import javax.annotation.Resource;
 @Service
 public class ThingServiceImpl implements ThingService {
 
-    @Resource
-    private ThingMapper2 thingMapper;
 
+    @Autowired
+    ThingMapper2 thingMapper2;
 
     @Override
     public Thing queryThingById(Integer id) {
-        return thingMapper.findById(id);
+        return thingMapper2.findById(id);
     }
 
     @Override
     public int insertSelective(Thing thing) {
-        return thingMapper.insertByThing(thing);
+        return thingMapper2.insertByThing(thing);
     }
 
 
